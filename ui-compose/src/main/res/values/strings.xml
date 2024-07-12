@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="home">Home</string>
+    <string name="users">Users</string>
+    <string name="repositories">Repositories</string>
+    <string name="search">Search</string>
+    <string name="search_for_users">Search for users…</string>
+    <string name="search_for_repositories">Search for Repositories…</string>
+</resources>
