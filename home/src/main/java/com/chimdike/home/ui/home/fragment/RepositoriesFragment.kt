@@ -9,10 +9,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -29,18 +27,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.chimdike.home.ui.components.RepositoryCards
-import com.chimdike.home.ui.components.UserCards
-import com.chimdike.home.ui.home.viewmodel.HomeViewModel
 import com.chimdike.home.ui.home.viewmodel.RepositoriesViewModel
 import com.chimdike.home.ui.home.viewmodel.RepositoryViewState
-import com.chimdike.home.ui.home.viewmodel.ViewState
 import com.chimdike.ui_compose.R
 import com.chimdike.ui_compose.compose.GreTypography
 import com.chimdike.ui_compose.compose.ImageLoader
 import com.chimdike.ui_compose.compose.color.Background
 import com.chimdike.ui_compose.compose.color.SearchTextUnfocusedContainerColor
 import com.chimdike.ui_compose.compose.widgets.AppTextField
-import dagger.hilt.android.lifecycle.HiltViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -72,7 +66,7 @@ fun RepositoryFragment(
             Box(Modifier.weight(9f)) {
                 when (uiState.emptyState) {
                     true -> {
-                        InitialStateScreen(uiState = uiState)
+                        InitialStateScreen(uiState = uiState, errorState = true)
                     }
                     false -> {
                         if(uiState.entityResult != null && uiState.entityResult.result.items.isNotEmpty()){
@@ -82,10 +76,17 @@ fun RepositoryFragment(
                             InitialStateScreen(
                                 uiState = uiState,
                                 isEmpty = true,
+                                errorState = true,
+                            )
+                        }
+                        if(uiState.errorMessage.isNotEmpty()){
+                            InitialStateScreen(
+                                uiState = uiState,
+                                errorState = true,
                             )
                         }
                     }
-                    null ->  InitialStateScreen(uiState = uiState)
+                    null ->  InitialStateScreen(uiState = uiState, errorState = true)
                 }
 
             }
@@ -117,7 +118,8 @@ private fun UpperBand(viewModel: RepositoriesViewModel, uiState: RepositoryViewS
 fun InitialStateScreen(
     uiState: RepositoryViewState,
     modifier: Modifier = Modifier,
-    isEmpty:Boolean = false
+    isEmpty: Boolean = false,
+    errorState: Boolean = false
 ){
     var descriptionText = ""
     if(uiState.errorMessage.isNotEmpty()){
@@ -131,6 +133,10 @@ fun InitialStateScreen(
     }
     if(uiState.isLoading){
         descriptionText = "Searching for github repositories..."
+    }
+
+    if(errorState){
+        descriptionText = uiState.errorMessage
     }
 
 

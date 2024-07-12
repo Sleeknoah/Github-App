@@ -98,12 +98,21 @@ private fun HomePage(
                 false -> {
                     if (entityResult != null && entityResult.user.items.isNotEmpty()) {
                         UserSuccessLayout(uiState = uiState, viewModel = homeViewModel)
+                        return
                     }
                     if (entityResult != null && entityResult.user.items.isEmpty()) {
                         InitialState(
                             uiState = uiState,
                             isEmpty = true,
                         )
+                        return
+                    }
+                    if(uiState.errorMessage.isNotEmpty()){
+                        InitialState(
+                            uiState = uiState,
+                            errorState = true,
+                        )
+                        return
                     }
                 }
 
@@ -137,7 +146,8 @@ private fun UpperBand(homeViewModel: HomeViewModel, uiState: ViewState) {
 fun InitialState(
     uiState: ViewState,
     modifier: Modifier = Modifier,
-    isEmpty: Boolean = false
+    isEmpty: Boolean = false,
+    errorState: Boolean = false
 ){
     var descriptionText = ""
     if(uiState.errorMessage.isNotEmpty()){
@@ -151,6 +161,9 @@ fun InitialState(
     }
     if(uiState.isLoading){
         descriptionText = "Searching for github users..."
+    }
+    if(errorState){
+        descriptionText = uiState.errorMessage
     }
 
 
