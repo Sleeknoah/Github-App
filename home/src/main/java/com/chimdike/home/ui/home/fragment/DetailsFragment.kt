@@ -264,7 +264,7 @@ fun RepositoryHeader(user: UserInfoEntity) {
                     modifier = Modifier.padding(8.dp),
                     style = GreTypography.bodyMedium.copy(
                         color = Color.Black,
-                        fontSize = 8.sp,
+                        fontSize = 12.sp,
                         fontWeight = FontWeight.W500,
                     )
                 )

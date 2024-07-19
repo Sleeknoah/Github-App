@@ -135,10 +135,6 @@ fun InitialStateScreen(
         descriptionText = "Searching for github repositories..."
     }
 
-    if(errorState){
-        descriptionText = uiState.errorMessage
-    }
-
 
     Column(
         modifier = modifier.fillMaxSize(),

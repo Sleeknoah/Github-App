@@ -69,6 +69,9 @@ fun UserRepositoryCards(
             Spacer(modifier = Modifier.height(4.dp))
             UserDescriptionComposable(bio = item.description)
             Spacer(modifier = Modifier.height(12.dp))
+            if(item.topics.isNotEmpty())
+                TopicsGridComposable(topics = item.topics)
+            Spacer(modifier = Modifier.height(12.dp))
 
         }
     }
